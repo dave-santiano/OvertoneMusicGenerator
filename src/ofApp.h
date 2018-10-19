@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxFft.h"
+
 
 class ofApp : public ofBaseApp{
 
@@ -11,14 +13,30 @@ class ofApp : public ofBaseApp{
 
 		void keyPressed(int key);
 		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
-		
+
+        vector<vector<float>> getProminentFrequencies();
+        void audioIn(ofSoundBuffer& buffer);
+
+        float binToFrequency(float sanmple, float sampleRate, float fftSize);
+
+        ofSoundStream soundStream;
+        ofSoundStreamSettings settings;
+
+        vector<float> audioBins;
+        vector<float> middleBins;
+        vector<float> audioInputData;
+        vector<vector<float>> prominentFrequencies;
+
+        ofxFft* fft;
+        mutex soundMutex;
+        ofMutex waveformMutex;
+
+        bool recording;
+        int nProminentFrequencies;
+
+
+    private:
+        const double pi = 3.14159265358979323846;
+        int bufferSize; 
+        int sampleRate;
 };

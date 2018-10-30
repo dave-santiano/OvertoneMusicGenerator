@@ -17,10 +17,27 @@ class ofApp : public ofBaseApp{
         vector<vector<float>> getProminentFrequencies();
         void audioIn(ofSoundBuffer& buffer);
 
+        void updateWaveform(int waveformResolution);
+        void audioOut(ofSoundBuffer& buffer);
+        void playProminentFreqencies();
+        vector<float> referenceScale;
+        vector<float> waveform;
+        double phase;
+        float frequency;
+        bool referenceScaleMode;
+
+
+
+        void printProminentFrequencies(vector<vector<float>> prominentFrequencies);
+
         float binToFrequency(float sanmple, float sampleRate, float fftSize);
 
-        ofSoundStream soundStream;
-        ofSoundStreamSettings settings;
+        ofSoundStream outSoundStream;
+        ofSoundStream inSoundStream;
+        ofSoundStreamSettings outputAudioStreamSettings;
+        ofSoundStreamSettings inputAudioStreamSettings;
+
+
 
         vector<float> audioBins;
         vector<float> middleBins;
@@ -37,6 +54,7 @@ class ofApp : public ofBaseApp{
 
     private:
         const double pi = 3.14159265358979323846;
-        int bufferSize; 
+        int outputBufferSize;
+        int fftSize;
         int sampleRate;
 };
